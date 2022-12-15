@@ -1,0 +1,25 @@
+#!/system/bin/sh
+
+# This pin has a 3.3v input connected to the car's 12v (acc) through a buck converter to step-down the voltage from 12v to 3.3v
+# GND is connected as well
+GPIO=23
+SECONDS_TO_WAIT=10
+
+echo $GPIO > /sys/class/gpio/export
+echo in > /sys/class/gpio/gpio$GPIO/direction
+echo 0 > /sys/class/gpio/gpio$GPIO/value
+
+while [ 0 ]
+do
+    if [ $(cat /sys/class/gpio/gpio$GPIO/value) == 1 ]; then
+        sleep $SECONDS_TO_WAIT
+        
+        echo $GPIO > /sys/class/gpio/export
+        echo in > /sys/class/gpio/gpio$GPIO/direction
+        echo 0 > /sys/class/gpio/gpio$GPIO/value
+        
+        reboot -p
+    fi
+    
+    sleep 1
+done
