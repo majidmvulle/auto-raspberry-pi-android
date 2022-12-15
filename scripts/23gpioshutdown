@@ -7,11 +7,11 @@ SECONDS_TO_WAIT=10
 
 echo $GPIO > /sys/class/gpio/export
 echo in > /sys/class/gpio/gpio$GPIO/direction
-echo 0 > /sys/class/gpio/gpio$GPIO/value
+echo 1 > /sys/class/gpio/gpio$GPIO/value
 
-while [ 0 ]
+while [ 1 ]
 do
-    if [ $(cat /sys/class/gpio/gpio$GPIO/value) == 1 ]; then
+    if [ $(cat /sys/class/gpio/gpio$GPIO/value) == 0 ]; then
         sleep $SECONDS_TO_WAIT
         
         echo $GPIO > /sys/class/gpio/export
